@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>When Randos Attack!</title>
+        <style>
+          html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+          }
+        </style>
+    </head>
+    <body>
+
+          <canvas id="gameCanvas" width="1200" height="800"></canvas>
+
+    <script type="text/javascript" language="javascript">
+      var canvas = document.getElementById("gameCanvas");
+      var ctx = canvas.getContext("2d");
+
+      function loadAssets(assets, callback) {
+        var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+
+        for(var src in assets){
+          numImages++;
+          console.log("Number of Images:" + numImages);
+        }
+        for(var src in assets){
+          images[src] = new Image();
+          images[src].onload = function (){
+            if(++loadedImages >= numImages){
+              callback(images);
+            }
+          };
+          images[src].src = assets[src];
+        }
+      }
+
+      var assets = {
+        background : "assets/images/bg.png",
+        kaylah : "assets/images/kaylah.png"
+      };
+
+      loadAssets(assets, function(images){
+        ctx.drawImage(images.background, 0, 0);
+        ctx.drawImage(images.kaylah, canvas.width/2-images.kaylah.width/2, canvas.height-images.kaylah.height);
+      });
+
+      
+    </script>
+
+    </body>
+</html>
